@@ -56,7 +56,7 @@ void ScheduleInit(){
     LPLD_PIT_Init(Control);
     LPLD_PIT_EnableIrq(Control);
 }
-void GlobalControl(){ //Ö÷Ê±Ğò¿ØÖÆ
+void GlobalControl(){ //ä¸»æ—¶åºæ§åˆ¶
   static unsigned char FlagMs=0;
   static unsigned char FlagGetSpeed=0;
   static unsigned char FlagSpeed=0;
@@ -107,7 +107,7 @@ void GlobalControl(){ //Ö÷Ê±Ğò¿ØÖÆ
 //        if(PixelProcessBegin==2)ExpectOffset=ModeIdentification(PixelLineNear,PixelIndex(PixelNear,PixelLineNear,10)),PixelProcessBegin=0;
 
        //GetTurnAngleSpeed();
-      if(1) Plot();
+      if(0) Plot();
       else Viewccd();
   }else if(FlagMs==4){
     
@@ -116,10 +116,10 @@ void GlobalControl(){ //Ö÷Ê±Ğò¿ØÖÆ
     if(FlagGetSpeed==2)GetSpeed(),FlagGetSpeed=0;
     if(FlagSpeed==SpeedPeriod){
       I_Speed=(P_Speed/200);
-      //´ïµ½ExpectSpeedSetµÄ»º³å  ExpectSpeedÆ½»¬Êä³ö
+      //è¾¾åˆ°ExpectSpeedSetçš„ç¼“å†²  ExpectSpeedå¹³æ»‘è¾“å‡º
       //if(ExpectSpeed!=ExpectSpeedSet)ExpectSpeed+=((ExpectSpeedSet-ExpectSpeed)>0?1:-1) * IncreaseValue;
       
-      FlagSpeed=0,SpeedCtrl();//ËÙ¶È»·¿ØÖÆ
+      FlagSpeed=0,SpeedCtrl();//é€Ÿåº¦ç¯æ§åˆ¶
     }
     
   }else if(FlagMs==5){
@@ -127,9 +127,9 @@ void GlobalControl(){ //Ö÷Ê±Ğò¿ØÖÆ
     GetAngle();
     //GetTurnAngleSpeed();
     TurnCtrl();
-    BalanceCtrl();//Ö±Á¢»·¿ØÖÆ
-    OutputSmooth();//ËÙ¶ÈÆ½»¬Êä³ö
-    //PWM ÏŞ·ù
+    BalanceCtrl();//ç›´ç«‹ç¯æ§åˆ¶
+    OutputSmooth();//é€Ÿåº¦å¹³æ»‘è¾“å‡º
+    //PWM é™å¹…
     /*
     if(TurnDuty>0){
     LeftDuty=BalanceDuty - SpeedDuty;
@@ -141,9 +141,9 @@ void GlobalControl(){ //Ö÷Ê±Ğò¿ØÖÆ
     */
     LeftDuty=BalanceDuty - SpeedDuty - TurnDuty;
     RightDuty=BalanceDuty - SpeedDuty + TurnDuty;
-    if(MotorState==1)UpdateDuty();//¸üĞÂÕ¼¿Õ±È
+    if(MotorState==1)UpdateDuty();//æ›´æ–°å ç©ºæ¯”
     else {
-    //¹Øµç»ú
+    //å…³ç”µæœº
       FTM0ChangeCH0Duty(0);
       FTM0ChangeCH1Duty(0);
       FTM0ChangeCH2Duty(0);
@@ -161,7 +161,7 @@ void GlobalControl(){ //Ö÷Ê±Ğò¿ØÖÆ
   }
   if(FlagMs==5)FlagMs=0;
 }
-//Æ½»¬Êä³öº¯Êı
+//å¹³æ»‘è¾“å‡ºå‡½æ•°
 void OutputSmooth(){
     static unsigned char CounterForSpeedOutput=0;
     static int SpeedDutyDiff=0;
